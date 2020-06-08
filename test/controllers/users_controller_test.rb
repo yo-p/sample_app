@@ -7,6 +7,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:archer)
   end
 
+  test "sould redirect index when not logged in" do
+    get users_path
+    assert_redirected_to login_path
+  end
+
   test "should get new" do
     get signup_path
     assert_response :success
@@ -38,4 +43,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   assert_redirected_to root_path
   end
 
+  test "sould not allow the admin attribute to be edited viathe web" do
+    log_in_as(@other_user)
+    assert_not @other_user.admin?
+    patch user_path(@other_user), params:{
+                    user: {password: @other_user.password,
+                          password_confirmation: @other_user.password,
+                          admin: 1,}}
+    assert_not @other_user. reload.admin?
+  end
+
+  test "sould redirect destroy when not logged in" do
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to login_path
+  end
+
+  test "sould redirect destroy when logged in as a non-admin" do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to root_path
+  end
 end
