@@ -281,3 +281,13 @@ span.picture {
     }
 }
 
+/* search form */
+
+.search_form {
+    overflow: auto;
+    margin: 10px;
+    .input-group {
+        width: 305px;
+    }
+}
+
