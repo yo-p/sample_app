@@ -11,7 +11,10 @@
         </section>
     </aside>
     <div class="col-md-8">
-            <h3>Micropost Feed</h3>
-            <%= render 'shared/feed' %>
+        <div class="search_form">
+            <%= render 'microposts/microposts_search_form' %>
+        </div>
+        <h3>Micropost Feed</h3>
+        <%= render 'shared/feed' %>
     </div>
 </div>
