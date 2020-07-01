@@ -12,7 +12,7 @@
         </section>
     </aside>
     <div class="col-md-8">
-        <% if logged_in? && @user != current_user %>
+        <% if logged_in? && @user.id != current_user.id %>
             <%= render 'follow_form' %>
         <% end %>
         <% if @user.microposts.any? %>
