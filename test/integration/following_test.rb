@@ -6,6 +6,7 @@ class FollowingTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
     @other = users(:archer)
     log_in_as(@user)
+    ActionMailer::Base.deliveries.clear
   end
 
   test "following page" do
@@ -60,4 +61,30 @@ class FollowingTest < ActionDispatch::IntegrationTest
       assert_match CGI.escapeHTML(micropost.content),response.body
     end
   end
+
+  test "sould send follow notification email" do
+    post relationships_path, params: {followed_id: @other.id}
+    assert_equal 1, ActionMailer::Base.deliveries.size
+  end
+
+  test "should not send follow notification email" do
+    not_notify = users(:michael)
+    post relationships_path, params: {followed_id: not_notify.id}
+    assert_equal 0, ActionMailer::Base.deliveries.size
+  end
+
+  test "should send unfollow notification email" do
+    @user.follow(@other)
+    relationship = @user.active_relationships.find_by(followed_id: @other.id)
+    delete relationship_path(relationship)
+    assert_equal 2, ActionMailer::Base.deliveries.size
+  end
+
+  test "should not send unfollow notification email" do
+    not_notify = users(:michael)
+    @user.follow(not_notify)
+    relationship = @user.active_relationships.find_by(followed_id: not_notify.id)
+    assert_equal 0, ActionMailer::Base.deliveries.size
+  end
+
 end
