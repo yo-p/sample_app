@@ -13,5 +13,9 @@
     <%= f.label :password_confirmation, class:'form-control' %>
     <%= f.password_field :password_confirmation, class:'form-control' %>
 
+    <%= f.label :follow_notification %>
+    <%= f.check_box :follow_notification %>
+    <span>Send email when other users follow or unfollow you</span>
+
     <%= f.submit yield(:button_text), class:"btn btn-primary"%>
 <% end %>
