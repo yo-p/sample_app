@@ -5,6 +5,16 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
   @user = users(:michael)
   end
+
+  test "valid signup information" do
+    get signup_path
+    assert_difference 'User.count', 1 do
+      post users_path, params: { user: { name: "Example User", email: "user@example.com",
+                                          password: "password", password_confirmation: "password",
+                                          user_name: "example_user"}}
+    end
+    follow_redirect!
+  end
   
   # test "login with invalid infomation" do
   #   get login_path
