@@ -7,6 +7,7 @@ michael:
   activated: true
   activated_at: <%= Time.zone.now %>
   follow_notification: false
+  user_name: michael_example
 
 
 archer:
@@ -16,6 +17,8 @@ archer:
   activated: true
   activated_at: <%= Time.zone.now %>
   follow_notification: true
+  user_name: archer
+
 
 
 lana:
@@ -24,6 +27,8 @@ lana:
   password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
+  user_name: lana
+
 
 
 malory:
@@ -32,6 +37,8 @@ malory:
   password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
+  user_name: malory
+
 
 
 <% 30.times do |n| %>
@@ -41,6 +48,7 @@ user_<%= n %>:
   password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
+  user_name: <%= "example_#{n}" %>
 <% end %>
 
 

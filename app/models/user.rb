@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    before_save :downcase_user_name
     has_many :microposts, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship",
                     foreign_key: "follower_id",
@@ -18,6 +19,10 @@ class User < ApplicationRecord
                 uniqueness: {case_sensitive: false}
     has_secure_password
     validates :password, presence: true, length: {minimum: 6},allow_nil: true
+    VALID_USER_NAME_REGEX = /\A[a-z0-9_]+\z/i
+    validates :user_name, presence: true, length: {in: 5..15},
+                            format: {with: VALID_USER_NAME_REGEX},
+                            uniqueness: {case_sensitive: false}
 
     def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST:
@@ -106,5 +111,9 @@ class User < ApplicationRecord
     def create_activation_digest
         self.activation_token = User.new_token
         self.activation_digest = User.digest(activation_token)
+    end
+
+    def downcase_user_name
+        self.user_name.downcase!
     end
 end
