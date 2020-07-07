@@ -49,4 +49,46 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     get root_path
     assert_match "1 micropost", response.body
   end
+
+  test "reply to other user" do
+    log_in_as(@user)
+    get root_path
+
+    assert_no_difference 'Micropost.count' do
+      post microposts_path, params: {micropost: {content: "@1000000000000000000"}}
+    end
+    assert_select 'div#error_explanation'
+    assert_no_difference "Micropost.count" do
+      post microposts_path, params: {micropost: {content: "@#{@user.id}-Hoge-Hoge"}}
+    end
+    assert_select 'div#error_explanation'
+    other_user = users(:fuga)
+    assert_no_difference "Micropost.count" do
+      post microposts_path, params: {micropost: {content: "@#{other_user.id}-Hogera-Hogera"}}
+    end
+    assert_select 'div#error_explanation'
+
+    assert_difference 'Micropost.count', 1 do
+      post microposts_path, params: {micropost: {content: "@#{other_user.id}-Fuga-Fuga"}}
+    end
+  end
+
+  test "reply post visibility" do
+  log_in_as(@user)
+  get root_path
+  reply_to_user = users(:fuga)
+  content = "@#{reply_to_user.id}-Fuga-Fuga"
+  post microposts_path, params: {micropost: {content: content}}
+  follow_redirect!
+  assert_match content, response.body
+
+  # log_in_as(reply_to_user)
+  # get root_path
+  # assert_match content, response.body
+
+  # other_user = users(:lana)
+  # log_in_as(other_user)
+  # get root_path
+  # assert_match content, response.body
+  end
 end
