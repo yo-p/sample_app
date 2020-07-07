@@ -39,6 +39,14 @@ malory:
   activated_at: <%= Time.zone.now %>
   user_name: malory
 
+fuga:
+  name: Fuga
+  email: fuga@example.gov
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
+  user_name: fuga
+
 
 
 <% 30.times do |n| %>
