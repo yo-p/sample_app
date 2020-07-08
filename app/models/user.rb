@@ -23,6 +23,13 @@ class User < ApplicationRecord
     validates :user_name, presence: true, length: {in: 5..15},
                             format: {with: VALID_USER_NAME_REGEX},
                             uniqueness: {case_sensitive: false}
+    
+    has_many :from_messages, class_name: "Message",
+                    foreign_key: "from_id", dependent: :destroy
+    has_many :to_messages, class_name: "Messages",
+                    foreign_key: "to_id", dependent: :destroy
+    has_many :sent_messages, through: :from_messages, source: :from
+    has_many :received_messages, through: :to_messages, source: :to
 
     def User.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST:
@@ -100,6 +107,11 @@ class User < ApplicationRecord
     # 現在のユーザーがフォローしてたらtrueを返す
     def following?(other_user)
         following.include?(other_user)
+    end
+
+    # Send message to other user
+    def send_message(other_user, room_id, content)
+        from_messages.create!(to_id: other_user.id, room_id: room_id, content: content)
     end
 
     private

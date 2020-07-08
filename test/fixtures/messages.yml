@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: 
+  integer: 
+  integer: 
+  string: MyString
+  room_id: MyString
+
+two:
+  text: 
+  integer: 
+  integer: 
+  string: MyString
+  room_id: MyString
