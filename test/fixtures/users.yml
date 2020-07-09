@@ -21,6 +21,7 @@ archer:
 
 
 
+
 lana:
   name: Lana Kane
   email: hands@example.gov
@@ -28,6 +29,7 @@ lana:
   activated: true
   activated_at: <%= Time.zone.now %>
   user_name: lana
+
 
 
 
@@ -39,6 +41,7 @@ malory:
   activated_at: <%= Time.zone.now %>
   user_name: malory
 
+
 fuga:
   name: Fuga
   email: fuga@example.gov
@@ -46,6 +49,7 @@ fuga:
   activated: true
   activated_at: <%= Time.zone.now %>
   user_name: fuga
+
 
 
 
