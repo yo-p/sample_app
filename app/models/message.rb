@@ -12,4 +12,6 @@ class Message < ApplicationRecord
     def Message.recent_in_room(room_id)
         where(room_id: room_id).last(500)
     end
+
+    after_create_commit {MessageBroadcastJob.perform_later self}
 end
