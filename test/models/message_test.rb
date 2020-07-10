@@ -1,14 +1,13 @@
 require 'test_helper'
 
 class MessageTest < ActiveSupport::TestCase
-
   def setup
     @message = Message.new(from_id: users(:michael).id, to_id: users(:fuga).id,
                            room_id: "#{users(:michael).id}-#{users(:fuga).id}",
-                           content: "hello world")
+                           content: "abcdefghijklmnopqrstuvwxyz")
   end
 
-  test "sould be valid" do
+  test "should be valid" do
     assert @message.valid?
   end
 
@@ -28,7 +27,7 @@ class MessageTest < ActiveSupport::TestCase
   end
 
   test "content should be present" do
-    @message.content = " "
+    @message.content = "  "
     assert_not @message.valid?
   end
 
@@ -38,8 +37,7 @@ class MessageTest < ActiveSupport::TestCase
   end
 
   test "order should be most recent last" do
-    assert_equal message(:most_recent), Message.last
+    assert_equal messages(:most_recent), Message.last
   end
-
-
 end
+

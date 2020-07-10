@@ -5,7 +5,7 @@ class Message < ApplicationRecord
     validates :from_id, presence: true
     validates :to_id, presence: true
     validates :room_id, presence: true
-    validates :content, presence: true
+    validates :content, presence: true, length: { maximum: 50}
 
     default_scope -> {order(created_at: :asc)}
 

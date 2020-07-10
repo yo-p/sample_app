@@ -1,13 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  content: 
-  from_id: 
-  to_id: 
-  room_id: MyString
+foo:
+  content: "Foo!"
+  created_at: <%= 10.minutes.ago %>
+  from_id: hoge
+  to_id: fuga
+  room_id: 1-2
 
-two:
-  content: 
-  from_id: 
-  to_id: 
-  room_id: MyString
+bar:
+  content: "Bar!"
+  created_at: <%= 2.years.ago %> 
+  from_id: piyo
+  to_id: hoge
+  room_id: 3-1
+
+baz:
+  content: "Baz!"
+  created_at: <%= 3.hours.ago %> 
+  from_id: fuga
+  to_id: hogera
+  room_id: 2-4
+
+most_recent:
+  content: "Most Recent!"
+  created_at: <%= Time.zone.now %>
+  from_id: hogehoge
+  to_id: hoge
+  room_id: 5-1
+
+
