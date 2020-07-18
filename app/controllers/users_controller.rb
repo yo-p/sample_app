@@ -107,7 +107,7 @@ class UsersController < ApplicationController
       redirect_to(root_path)unless current_user.admin?
     end
 
-    # Return room id
+    # Return room ide
     def message_room_id(first_user, second_user)
       first_id = first_user.id.to_i
       second_id = second_user.id.to_i
